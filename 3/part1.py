@@ -1,46 +1,36 @@
-sum=0
-file = open('input.txt','r')
-lineP='.'*140+'\n'
-lineC='.'*140+'\n'
 
 def isSymbol(s):
     return not s.isnumeric() and s!='.' and s!='\n'
 
+sum=0
+file = open('input.txt','r')
 lines = file.readlines()
-lines[len(lines)-1]+='\n'
-lines.append('.'*140+'\n')
-
-for x in range(len(lines)):
-    lineN=lines[x]
+for col in range(len(lines)):
 
     numFound=False
     buildNum=''
     valid=False
-    prevValid=False
-    nextValid=False
 
-    for i in range(len(lineC)):
-
-        if(lineC[i]!='\n' ):
-            nextValid=isSymbol(lineP[i+1]) or isSymbol(lineC[i+1]) or isSymbol(lineN[i+1])
-
-        if(not lineC[i].isnumeric() and numFound):
-            if(valid): sum+=int(buildNum)
+    for row in range(len(lines[col])):
+        #print(lines[col][row])
+        if(not lines[col][row].isnumeric() and numFound):
+            
+            if valid==True:
+                print(buildNum)
+                sum+=int(buildNum)
+            
             valid=False
             numFound=False
             buildNum=''
 
-        if(lineC[i].isnumeric()):
-            
-            if(isSymbol(lineP[i])or isSymbol(lineN[i]) or prevValid or nextValid):
-                valid=True
+        if(lines[col][row].isnumeric()):
 
+            for windowC in [-1,0,1]:
+                for windowR in [-1,0,1]:
+                    if(0<=col+windowC <len(lines) and 0<=row+windowR <len(lines[col])):
+                      
+                        if(isSymbol(lines[col+windowC][row+windowR])):
+                            valid=True
             numFound=True
-            buildNum+=lineC[i]
-        
-        #check if symbol is adj in prev
-        prevValid=isSymbol(lineP[i]) or isSymbol(lineC[i]) or isSymbol(lineN[i])
-    lineP=lineC
-    lineC=lineN
-
+            buildNum+=lines[col][row]
 print(sum)
