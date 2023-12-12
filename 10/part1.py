@@ -7,24 +7,21 @@ for y in range(len(acosMap)):
         if(acosMap[y][x]=='S'):
             Spos=[y,x]
             break
-keys2={
+validDirections={
     '|':[(-1,0),(1, 0)],
-    '-':[(0, -1),(0, 1)],
+    '-':[(0,-1),(0, 1)],
     'L':[(-1,0),(0, 1)],
-    'J':[(-1,0),(0, -1)],
-    '7':[(0, -1), (1, 0)],
-    'F':[(0, 1), (1, 0)   ],
-    '.':[( 0, 0), ( 0, 0)  ],
-    'S':[ (-1,0),(0, 1),  (1, 0),(0, -1) ]
+    'J':[(-1,0),(0,-1)],
+    '7':[(0,-1),(1, 0)],
+    'F':[(0, 1),(1, 0)],
+    '.':[(0, 0),(0, 0)],
+    'S':[(-1,0),(0, 1),(1, 0),(0, -1)]
 }
-'''
-       (-1,0)
+'''    (-1,0)
 (0, -1)  []  (0, 1)
-       (1, 0)
-
-COLOUMN FIRST THEN ROW       
+       (1, 0)     
 '''
-startingBox=startingBox=keys2['S']
+startingBox=startingBox=validDirections['S']
 currCoor=Spos
 count=0
 while(True):
@@ -37,10 +34,9 @@ while(True):
         if(0<=checkCharY<len(acosMap) and 0<=checkCharX<len(acosMap[0])): 
             charr = acosMap[checkCharY][checkCharX]
             #check if a adj node connects to currnode 
-            for entry in keys2[charr]:
+            for entry in validDirections[charr]:
                 if([checkCharY+entry[0],checkCharX+entry[1]]==currCoor):
-                    startingBox=[(-1,0),(1,0),(0,-1),(0,1)]
-                    startingBox=keys2[charr].copy()
+                    startingBox=validDirections[charr].copy()
                     startingBox.remove(entry)
                     found=True
                     currCoor=[checkCharY,checkCharX]
