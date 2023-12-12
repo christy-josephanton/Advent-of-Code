@@ -1,5 +1,5 @@
 from pathlib import Path
-data_raw = Path(__file__).with_name("input_test_p2.txt").read_text().splitlines()
+data_raw = Path(__file__).with_name("input.txt").read_text().splitlines()
 acosMap = [list(line) for line in data_raw]
 #find S coor
 for y in range(len(acosMap)):
@@ -52,21 +52,21 @@ while(True):
         break     
 print(count//2)  
 
-for y in range(len(acosMap)):
-    for x in range(len(acosMap[y])):
-        print(acosMap[y][x]+'  ',end='')
-    print()
+# for y in range(len(acosMap)):
+#     for x in range(len(acosMap[y])):
+#         print(acosMap[y][x]+'  ',end='')
+#     print()
 
-print(path)
-print(pathCoor)
+# print(path)
+# print(pathCoor)
 
 blankMap= [['.' for _ in range(len(acosMap[0])*3)] for _ in range(len(acosMap)*3)]
 
-for y in range(len(blankMap)):
-    for x in range(len(blankMap[y])):
-        print(blankMap[y][x]+'  ',end='')
-    print()
-print()
+# for y in range(len(blankMap)):
+#     for x in range(len(blankMap[y])):
+#         print(blankMap[y][x]+'  ',end='')
+#     print()
+# print()
 for i in range(len(path)):
     r=pathCoor[i][1]
     c=pathCoor[i][0]
@@ -104,10 +104,10 @@ for i in range(len(path)):
       blankMap[3*c+2][3*r+1] = 'x'
 
 
-for y in range(len(blankMap)):
-    for x in range(len(blankMap[y])):
-        print(blankMap[y][x]+'  ',end='')
-    print()
+# for y in range(len(blankMap)):
+#     for x in range(len(blankMap[y])):
+#         print(blankMap[y][x]+'  ',end='')
+#     print()
 
 stack = [(0, 0)]
 while stack:
@@ -120,10 +120,32 @@ while stack:
         stack.append((y, x + 1))
         stack.append((y, x - 1))
 
-for y in range(len(blankMap)):
-    for x in range(len(blankMap[y])):
-        print(blankMap[y][x]+'  ',end='')
-    print()
+# for y in range(len(blankMap)):
+#     for x in range(len(blankMap[y])):
+#         print(blankMap[y][x]+'  ',end='')
+#     print()
 
 
 
+def get_3x3_submatrix(matrix, start_row, start_col):
+    submatrix = []
+    for i in range(start_row, start_row + 3):
+        row = matrix[i][start_col:start_col + 3]
+        submatrix.append(row)
+    return submatrix
+
+
+
+count=0
+for y in range(0,len(blankMap)-3,3):
+    for x in range(0,len(blankMap[y])-3,3):
+        submatrix = get_3x3_submatrix(blankMap, y, x)
+
+        if(submatrix==[['.']*3]*3):
+            count+=1
+
+        # for row in submatrix:
+        #     print(row)
+        # print()
+
+print(count)
