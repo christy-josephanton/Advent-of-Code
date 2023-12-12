@@ -52,21 +52,12 @@ while(True):
         break     
 print(count//2)  
 
-# for y in range(len(acosMap)):
-#     for x in range(len(acosMap[y])):
-#         print(acosMap[y][x]+'  ',end='')
-#     print()
+#part2
 
-# print(path)
-# print(pathCoor)
-
+#make blank map thats 3x3 times larger
 blankMap= [['.' for _ in range(len(acosMap[0])*3)] for _ in range(len(acosMap)*3)]
 
-# for y in range(len(blankMap)):
-#     for x in range(len(blankMap[y])):
-#         print(blankMap[y][x]+'  ',end='')
-#     print()
-# print()
+#fill blown up map with path, represented by x
 for i in range(len(path)):
     r=pathCoor[i][1]
     c=pathCoor[i][0]
@@ -103,12 +94,7 @@ for i in range(len(path)):
       blankMap[3*c+1][3*r+0] = 'x'
       blankMap[3*c+2][3*r+1] = 'x'
 
-
-# for y in range(len(blankMap)):
-#     for x in range(len(blankMap[y])):
-#         print(blankMap[y][x]+'  ',end='')
-#     print()
-
+#flood fill with x
 stack = [(0, 0)]
 while stack:
     y, x = stack.pop()
@@ -120,32 +106,12 @@ while stack:
         stack.append((y, x + 1))
         stack.append((y, x - 1))
 
-# for y in range(len(blankMap)):
-#     for x in range(len(blankMap[y])):
-#         print(blankMap[y][x]+'  ',end='')
-#     print()
-
-
-
-def get_3x3_submatrix(matrix, start_row, start_col):
-    submatrix = []
-    for i in range(start_row, start_row + 3):
-        row = matrix[i][start_col:start_col + 3]
-        submatrix.append(row)
-    return submatrix
-
-
-
 count=0
 for y in range(0,len(blankMap)-3,3):
     for x in range(0,len(blankMap[y])-3,3):
-        submatrix = get_3x3_submatrix(blankMap, y, x)
-
-        if(submatrix==[['.']*3]*3):
-            count+=1
-
-        # for row in submatrix:
-        #     print(row)
-        # print()
+        #make 3x3 matrix
+        submatrix=[row[x:x+3] for row in blankMap[y:y+3]]
+        #if its all . valid, add to count
+        if(submatrix==[['.']*3]*3): count+=1
 
 print(count)
