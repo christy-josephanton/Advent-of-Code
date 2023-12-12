@@ -75,7 +75,7 @@ for i in range(len(path)):
       blankMap[3*c+0][3*r+1] = 'x'
       blankMap[3*c+1][3*r+1] = 'x'
       blankMap[3*c+2][3*r+1] = 'x'
-      
+
     elif path[i]=='-':
       blankMap[3*c+1][3*r+0] = 'x'
       blankMap[3*c+1][3*r+1] = 'x'
@@ -108,4 +108,22 @@ for y in range(len(blankMap)):
     for x in range(len(blankMap[y])):
         print(blankMap[y][x]+'  ',end='')
     print()
+
+stack = [(0, 0)]
+while stack:
+    y, x = stack.pop()
+    if(0<=y<len(blankMap) and 0<=x<len(blankMap[0]) and blankMap[y][x] != 'x'):
+        blankMap[y][x] = 'x'  # Mark the current cell as visited
+        # Add neighboring cells to the stack
+        stack.append((y + 1, x))
+        stack.append((y - 1, x))
+        stack.append((y, x + 1))
+        stack.append((y, x - 1))
+
+for y in range(len(blankMap)):
+    for x in range(len(blankMap[y])):
+        print(blankMap[y][x]+'  ',end='')
+    print()
+
+
 
