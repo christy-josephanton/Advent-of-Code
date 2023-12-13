@@ -51,21 +51,17 @@ def dynamic_spring(DP, sequence, springs):
         elif(sequence[next_spring] in '?.'):
             out+=dynamic_spring(DP,sequence[next_spring+1:], springs[1:])
 
-
     DP[(sequence, springs)]=out
     return out
+
 
 combos=0
 for line in data_raw:
     sequence,springs=line.split()
+    sequence=((sequence+'?')*5)[:-1]
+    springs=((springs+',')*5)[:-1]
     springs = [int(i) for i in springs.split(',')]
     springs=tuple(springs)
-
-
-
     DP = {}
-    DP.clear
     combos+= dynamic_spring(DP,sequence,springs)
-    
-    #remove when want final answer
 print (combos)
